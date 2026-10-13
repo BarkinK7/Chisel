@@ -1,0 +1,11 @@
+{
+  "name": "chisel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chisel: a to-do app where your mascot gets carved from clay to masterpiece.",
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/cli": "8.5.2",
+    "@capacitor/core": "8.5.2"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "appId": "com.barkin.chisel",
+  "appName": "Chisel",
+  "webDir": "www",
+  "android": { "backgroundColor": "#1760C2" }
+}
