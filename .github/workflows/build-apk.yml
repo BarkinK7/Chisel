@@ -3,7 +3,12 @@ name: Build Android APK
 on:
   push:
     branches: [main]
+  release:
+    types: [published]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -23,13 +28,31 @@ jobs:
       - name: Install Capacitor
         run: npm install
 
+      - name: Unpack the signing key
+        env:
+          KEYSTORE: ${{ secrets.CHISEL_KEYSTORE }}
+        run: |
+          if [ -z "$KEYSTORE" ]; then
+            echo "::error::The CHISEL_KEYSTORE secret is missing. Add it under Settings > Secrets and variables > Actions (see README). Without it, the APK cannot update your installed app."
+            exit 1
+          fi
+          echo "$KEYSTORE" | base64 -d > chisel.keystore
+          mkdir -p ~/.android && cp chisel.keystore ~/.android/debug.keystore
+
       - name: Create Android project
         run: |
+          # runtime that connects the page to notifications and the back button
+          cp node_modules/@capacitor/core/dist/capacitor.js www/capacitor.js
           npx cap add android
           # allow the vibration effects
           sed -i 's#<uses-permission android:name="android.permission.INTERNET" />#<uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.VIBRATE" />#' android/app/src/main/AndroidManifest.xml
           # use Chip as the app icon
           cp -r android-res/* android/app/src/main/res/
+          # version shown on the phone comes from package.json; the build number always grows
+          VERSION=$(node -p "require('./package.json').version")
+          sed -i "s/versionCode 1$/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"$VERSION\"/" android/app/build.gradle
+          # sign every build with the same key, so new versions install over old ones
+          printf '\nandroid { signingConfigs { debug { storeFile rootProject.file("../chisel.keystore"); storePassword "android"; keyAlias "androiddebugkey"; keyPassword "android" } } }\n' >> android/app/build.gradle
           npx cap sync android
 
       - name: Build APK
@@ -38,8 +61,20 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug
 
+      - name: Name the APK after its version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          cp android/app/build/outputs/apk/debug/app-debug.apk "Chisel-$VERSION.apk"
+          echo "APK=Chisel-$VERSION.apk" >> "$GITHUB_ENV"
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Chisel-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: ${{ env.APK }}
+
+      - name: Attach the APK to the release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.APK }}
