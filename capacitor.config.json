@@ -2,5 +2,14 @@
   "appId": "com.barkin.chisel",
   "appName": "Chisel",
   "webDir": "www",
-  "android": { "backgroundColor": "#1760C2", "webContentsDebuggingEnabled": true }
+  "android": {
+    "backgroundColor": "#1760C2",
+    "webContentsDebuggingEnabled": true
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_chip",
+      "iconColor": "#1E7BD8"
+    }
+  }
 }
