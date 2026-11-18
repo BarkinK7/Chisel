@@ -1,6 +1,6 @@
 {
   "name": "chisel",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "Chisel: carve your best self. Habits, big goals and friends, with Chip the marble mascot.",
   "dependencies": {

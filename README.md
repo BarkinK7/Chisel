@@ -16,11 +16,12 @@ Carve your best self. A habit and goal app where Chip, a little marble mascot, c
 
 ## What's in 1.2
 
-- Two currencies: Drachma (earned by doing, buys most items) and Ambrosia (very rare for now, buys Legendary items). Old coin balances were recalculated; bought items stay.
+- Two currencies: Drachma (earned by doing, buys most items) and Ambrosia (rare, buys Streak Freezes, Pardons and the Ambrosia collection of special items). Old coin balances were recalculated; bought items stay.
 - New ranks offer several rewards to choose from. Halos come only from ranks; bought halos were refunded.
 - Learn-by-doing onboarding, a "first week" path with 7 gifts, a daily pace and weekly pace suggestions.
 - Streak Freeze (covers a missed day) and Pardon (clears a missed task's penalty). Undo now takes back every reward an action gave.
 - Friend requests with accept and decline, friend and invite rewards, your own profile card, league banners on profiles.
 - Up to three varied reminders a day with a white Chip status icon, and an in-app update card.
 - Goal steps show up in the day's task list. Calmer typography with embedded Nunito and Fredoka fonts, a lower tab bar and a new add button.
+- 1.2.1: the Ambrosia collection (Galaxy, Molten gold, Frost crystal, Phoenix wings, Golden aura, Crown of stars, Apollo's flame, Aurora), Freeze and Pardon paid in Ambrosia, tap your profile header to see your card, goal steps always on Home, the add button back in the app's style, original font weights with lighter counters.
 - New items: 7 hairstyles, 4 beards, 5 hats, 5 extras, 3 eyes, 3 mouths, 3 colors, 2 hair colors. Hats no longer clash with tall hair.
