@@ -1349,7 +1349,7 @@ details.ideasbox[open] summary span{color:var(--ink-3)}
           <div class="setrow"><span>Backup and restore</span><button class="btn3d small ghost" type="button" id="dataBtn">Open</button></div>
           <div class="setrow"><span>How Chisel works</span><button class="btn3d small ghost" type="button" id="tutBtn">Replay</button></div>
           <div class="setrow" id="exRow"><span>Example tasks</span><button class="btn3d small ghost" type="button" id="clearEx2">Clear</button></div>
-          <div class="setrow"><span>Version</span><span class="small-note" id="verTxt" style="margin:0">Chisel 1.2.1</span></div>
+          <div class="setrow"><span>Version</span><span class="small-note" id="verTxt" style="margin:0">Chisel 1.2.2</span></div>
           <div class="setrow"><span>Erase all data</span><button class="btn3d small coral" type="button" id="resetBtn">Erase</button></div>
         </div>
       </div>
@@ -2739,7 +2739,9 @@ function beardSVG(id, c){
     default: return "";
   }
 }
-const HAT_COVER = new Set(["beanie","helmet","wizard","grad","chef","pilos","sunhat","petasos","bucket","cap","phrygian","party","crown"]);
+const HAT_COVER = new Set(["beanie","helmet","wizard","grad","chef","pilos","sunhat","petasos","bucket","cap","phrygian","party","crown","sprout","catears","headphones","starcrown","apollo","owl"]);
+const WORN = new Set(["bowtie","scarf","medal","pearls","chiton","toga","mantle"]);
+const MUSTACHE = new Set(["mustache","vandyke","full","ducktail","mutton","circle"]);
 const TALL_HAIR = new Set(["bun","manbun","mohawk","spiky","afro","twinbuns","curlytop","curls","undercut"]);
 function chipSVG(o){
   const tier = o.tier || 0, mood = o.mood || "idle", look = Object.assign({}, DEFAULT_LOOK, o.look || {});
@@ -2766,12 +2768,14 @@ function chipSVG(o){
     else if(C.fx === "frost") s += `<path d="M16 62L38 42L58 66L82 38L104 60M24 108L46 82L68 100L90 78" fill="none" stroke="#fff" stroke-width="1.8" opacity=".8"/><path d="M38 42L46 82M58 66L68 100M82 38L90 78" fill="none" stroke="#fff" stroke-width="1" opacity=".55"/>`;
     s += `</g>`;
   }
+  const held = !BACK[look.extra] && !WORN.has(look.extra);
+  if(WORN.has(look.extra)) s += extraSVG(look.extra);             /* neck and body pieces sit under the beard */
   s += beardSVG(look.beard, tint);
-  if(!BACK[look.extra]) s += extraSVG(look.extra);
-  s += face2(mood, look, ink);
-  if(["mustache","vandyke","full","ducktail","mutton","circle"].includes(look.beard)) s += `<path d="M44 80q8-8 16-1q8-7 16 1q-5 7-16 2q-11 5-16-2z" fill="${tint}" stroke="rgba(20,16,30,.45)" stroke-width="1.5" stroke-linejoin="round"/>`;
+  if(MUSTACHE.has(look.beard)) s += `<path d="M44 80q8-8 16-1q8-7 16 1q-5 7-16 2q-11 5-16-2z" fill="${tint}" stroke="rgba(20,16,30,.45)" stroke-width="1.5" stroke-linejoin="round"/>`;
   if(look.beard === "handlebar") s += `<path d="M60 79q-9-6-16 0q-5 4-9 0q-3 6 4 8q7 1 12-3q5-3 9 0q4-3 9 0q5 4 12 3q7-2 4-8q-4 4-9 0q-7-6-16 0z" fill="${tint}" stroke="rgba(20,16,30,.45)" stroke-width="1.4" stroke-linejoin="round"/>`;
+  s += face2(mood, look, ink);                                    /* the mouth is drawn over the mustache */
   s += hairSVG(hid, tint) + hatSVG(look.hat);
+  if(held) s += extraSVG(look.extra);                              /* whatever Chip holds stays in front of hair and hats */
   if(tier >= 3 || C.shine) s += `<path class="twinkle" d="M90 40l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="#fff"/>`;
   s += `</g>`;
   if(look.halo && look.halo !== "none") s += `<g class="halo">${haloSVG(look.halo, Math.min(12, top - 12), u)}</g>`;
@@ -4496,7 +4500,7 @@ async function syncNotifs(ask){
   }catch(e){}
 }
 /* ---------- easy updates: the app asks GitHub if a newer version exists ---------- */
-const APP_VER = "1.2.1", REPO = "BarkinK7/Chisel";
+const APP_VER = "1.2.2", REPO = "BarkinK7/Chisel";
 let curVer = APP_VER;
 const newer = (a, b) => { const p = s => String(s||"").split(".").map(n => parseInt(n,10) || 0); const x = p(a), y = p(b); for(let i = 0; i < 3; i++){ if((x[i]||0) !== (y[i]||0)) return (x[i]||0) > (y[i]||0); } return false; };
 async function checkUpdate(){

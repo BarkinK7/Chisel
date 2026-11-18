@@ -24,4 +24,5 @@ Carve your best self. A habit and goal app where Chip, a little marble mascot, c
 - Up to three varied reminders a day with a white Chip status icon, and an in-app update card.
 - Goal steps show up in the day's task list. Calmer typography with embedded Nunito and Fredoka fonts, a lower tab bar and a new add button.
 - 1.2.1: the Ambrosia collection (Galaxy, Molten gold, Frost crystal, Phoenix wings, Golden aura, Crown of stars, Apollo's flame, Aurora), Freeze and Pardon paid in Ambrosia, tap your profile header to see your card, goal steps always on Home, the add button back in the app's style, original font weights with lighter counters.
+- 1.2.2: nothing overlaps on Chip any more. Held items stay in front of hair and hats, neck pieces sit under beards, the mouth shows over mustaches, and every hat that sits on the crown tucks tall hair in.
 - New items: 7 hairstyles, 4 beards, 5 hats, 5 extras, 3 eyes, 3 mouths, 3 colors, 2 hair colors. Hats no longer clash with tall hair.
